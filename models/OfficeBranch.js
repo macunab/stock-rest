@@ -11,6 +11,11 @@ const OfficeBranchSchema = Schema({
     },
     address: {
         type: String,
+    },
+    isEnabled: {
+        type: Boolean,
+        required: true,
+        default: true
     }
 });
 
