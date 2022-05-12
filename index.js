@@ -1,14 +1,21 @@
 const express = require('express');
 const cors = require('cors');
-const { append } = require('express/lib/response');
+const dbConnection = require('./db/dbConfig');
 
+// load env variables
 require('dotenv').config();
 
 const app = express();
+dbConnection();
 
-app.use( cors() );
+// Cors
+app.use(cors());
 
-app.use( express.json() );
+app.use(express.json());
+
+// Routes
+app.use('/api/auth', require('./routes/auth.route'));
+app.use('/api/products', require('./routes/product.route'));
 
 app.listen( 4000, () => {
     console.log(`Se ha iniciado el servidor`);

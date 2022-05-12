@@ -7,11 +7,12 @@ const ProductSchema = Schema({
     },
     office: {
         type: Schema.Types.ObjectId,
-        ref: 'OfficeBranch'
+        ref: 'OfficeBranch',
+        require: true
     },
     description: {
         type: String,
-        required: true
+        required: false
     },
     price: {
         type: Number,
