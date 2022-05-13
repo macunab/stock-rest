@@ -14,6 +14,6 @@ const MovementSchema = Schema({
         ref: 'Product'
     }]
 },
-{ timestamps: true });
+{ timestamps: true, versionKey: false });
 
 module.exports = model('Movement', MovementSchema);

@@ -17,6 +17,7 @@ const OfficeBranchSchema = Schema({
         required: true,
         default: true
     }
-});
+},
+{ versionKey: false });
 
 module.exports = model('OfficeBranch', OfficeBranchSchema);

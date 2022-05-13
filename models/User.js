@@ -19,7 +19,8 @@ const UserSchema = Schema({
         required: true,
         default: 'EMPLOYEE'
     }
-});
+},
+    { versionKey: false });
 
 module.exports = model('User', UserSchema);
 

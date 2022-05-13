@@ -23,6 +23,6 @@ const ProductSchema = Schema({
         required: true
     },
 },
-{ timestamps: true });
+{ timestamps: true, versionKey: false });
 
 module.exports = model('Product', ProductSchema);
