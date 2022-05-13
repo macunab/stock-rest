@@ -21,7 +21,7 @@ const ProductSchema = Schema({
     stock: {
         type: Number,
         required: true
-    },
+    }
 },
 { timestamps: true, versionKey: false });
 
