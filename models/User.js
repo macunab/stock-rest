@@ -1,10 +1,14 @@
-const { Schema, model } = required('mongoose');
+const { Schema, model } = require('mongoose');
 
 const UserSchema = Schema({
+    name: {
+        type: String,
+        required: true
+    },  
     isActive: {
         type: Boolean,
         required: true,
-        default: false
+        default: true
     },
     email: {
         type: String,
@@ -14,8 +18,8 @@ const UserSchema = Schema({
         type: String,
         required: true
     },
-    auth: {
-        type: String,
+    permissionLevel: {
+        type: ['ADMIN', 'EMPLOYEE'],
         required: true,
         default: 'EMPLOYEE'
     }
