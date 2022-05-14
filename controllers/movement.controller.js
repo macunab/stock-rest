@@ -46,6 +46,8 @@ const updateMovement = async ( req, res ) => {
 
 /** Una vez confirmado un movimiento se cargan todos las modificaciones de stock en 
  *  los productos seleccionados.
+ * Me tope con un bug al usar un callback en findByIdAndUpdate, en ese caso es necesario 
+ * utilizar .then() para visualizar la data.
  */
 const confirmMovement = async ( req, res ) => {
 
@@ -53,11 +55,16 @@ const confirmMovement = async ( req, res ) => {
     const { isConfirmed, isOut, products } = req.body;
     try{
         await changeStock(products, isOut);
-        await Movement.findByIdAndUpdate(id, { isConfirmed });
-    } catch(err) {
+        console.log('PASO EL CHANGESTOCK');
+        await Movement.findByIdAndUpdate(id, { isConfirmed: isConfirmed });
         res.status(200).json({
+            ok:true,
+            msg: 'movement confirmed successfully'
+        });
+    } catch(err) {
+        res.status(400).json({
             ok: false,
-            msg: 'An error ocurred while trying confirm a movement'
+            msg: err
         });
     }
 
