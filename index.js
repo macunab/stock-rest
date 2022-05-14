@@ -17,6 +17,8 @@ app.use(express.json());
 app.use('/api/auth', require('./routes/auth.route'));
 app.use('/api/products', require('./routes/product.route'));
 app.use('/api/offices', require('./routes/offices.route'));
+app.use('/api/movements', require('./routes/movement.route'));
+app.use('/api/users', require('./routes/user.route'));
 
 app.listen( 4000, () => {
     console.log(`Se ha iniciado el servidor`);

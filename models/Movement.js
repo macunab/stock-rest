@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 /** isOut : false when is in movement */
 const MovementSchema = Schema({
     isOut: {
-        type: boolean,
+        type: Boolean,
         required: true
     },
     user: {

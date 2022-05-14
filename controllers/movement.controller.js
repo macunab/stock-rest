@@ -1,9 +1,7 @@
 const changeStock = require("../helpers/stock");
 const Movement = require("../models/Movement");
 
-/**
- * 
- */
+/** create movement */
 const createMovement = async ( req, res ) => {
     try {
         const dbMovement = new Movement(req.body);
@@ -49,12 +47,12 @@ const updateMovement = async ( req, res ) => {
 /** Una vez confirmado un movimiento se cargan todos las modificaciones de stock en 
  *  los productos seleccionados.
  */
-const confirmMovement = ( req, res ) => {
+const confirmMovement = async ( req, res ) => {
 
     const { id } = req.params;
     const { isConfirmed, isOut, products } = req.body;
     try{
-        changeStock(products, isOut);
+        await changeStock(products, isOut);
         await Movement.findByIdAndUpdate(id, { isConfirmed });
     } catch(err) {
         res.status(200).json({
@@ -65,6 +63,22 @@ const confirmMovement = ( req, res ) => {
 
 }
 
+// 
+const findAllMovements = async ( req, res ) => {
+
+    try {
+        const movements = await Movement.find();
+        res.status(200).json({
+            movements
+        });
+    } catch(err) {
+        res.status(400).json({
+            ok: false,
+            msg: 'An error ocurred while trying find all movements'
+        });
+    }
+}
+
 const deleteMovement = ( req, res ) => {
 
 }
@@ -73,5 +87,6 @@ module.exports = {
     createMovement,
     updateMovement,
     deleteMovement,
-    confirmMovement
+    confirmMovement,
+    findAllMovements
 }
