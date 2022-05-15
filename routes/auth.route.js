@@ -1,4 +1,5 @@
 const { Router } = require('express');
+const { check } = require('express-validator');
 const { userLogin, renewToken } = require('../controllers/auth.controller');
 const { validateJWT } = require('../middlewares/jwt-validate');
 const { validateFields } = require('../middlewares/validateFields');

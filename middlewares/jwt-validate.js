@@ -10,9 +10,10 @@ const validateJWT = ( req = request , res, next ) => {
         });
     }
     try {
-        const { uid, name } = jwt.verify( token, process.env.SECRET_JWT_SEED );
+        const { uid, name, permissions } = jwt.verify( token, process.env.SECRET_JWT_SEED );
         req.uid = uid;
         req.name = name;
+        req.permissions = permissions;
     } catch(err) {
         return res.status(401).json({
             ok: false,
