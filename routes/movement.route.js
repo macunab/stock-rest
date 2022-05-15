@@ -8,6 +8,7 @@ const router = Router();
 // create movement
 router.post('/create', [
     check('isOut', 'isOut is required').not().isEmpty(),
+    check('office', 'office is required').not().isEmpty(),
     check('user', 'user is required').not().isEmpty(),
     check('products.*.product', 'product is required').not().isEmpty(),
     check('products.*.quantity', 'quantity has to be a number').isNumeric()
@@ -18,6 +19,7 @@ router.post('/create', [
 // update movement
 router.put('/:id', [
     check('isOut', 'isOut is required').not().isEmpty(),
+    check('office', 'office is required').not().isEmpty(),
     check('user', 'user is required').not().isEmpty(),
     check('products.*.product', 'product is required').not().isEmpty(),
     check('products.*.quantity', 'quantity has to be a number').isNumeric()

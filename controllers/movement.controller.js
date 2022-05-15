@@ -86,6 +86,10 @@ const findAllMovements = async ( req, res ) => {
     }
 }
 
+/** No se si eliminar los movements o directamente deshabilitar un movement
+ * la segunda opcion implicaria hacer un controller en el que le pase un parametro
+ * para identificar si quiero un tipo de movimiento habilitado o no.
+ */
 const deleteMovement = ( req, res ) => {
 
 }

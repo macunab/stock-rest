@@ -42,7 +42,7 @@ const userLogin = async ( req, res = response ) => {
 const renewToken = async (req, res) => {
 
     const { uid, name, permissions } = req;
-    console.log(permissions);
+    console.log({permissions});
     const token = await generateJWT(uid, name, permissions);
     res.status(200).json({
         ok: true,
