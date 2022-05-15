@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 const { createMovement, updateMovement, findAllMovements, confirmMovement } = require('../controllers/movement.controller');
 const { validateFields } = require('../middlewares/validateFields');
+const { validateJWT } = require('../middlewares/jwt-validate');
 
 const router = Router();
 
@@ -14,6 +15,7 @@ router.post('/create', [
     check('products.*.quantity', 'quantity has to be a number').isNumeric()
     ],
     validateFields,
+    validateJWT,
     createMovement);
 
 // update movement
@@ -25,6 +27,7 @@ router.put('/:id', [
     check('products.*.quantity', 'quantity has to be a number').isNumeric()
 ],
     validateFields,
+    validateJWT,
     updateMovement);
 
 // find all movements
@@ -38,6 +41,7 @@ router.put('/confirm/:id', [
     check('isConfirmed', 'isConfirmed is required').not().isEmpty()
 ],
     validateFields,
+    validateJWT,
     confirmMovement);
 
 // delete movement (put or delete?)

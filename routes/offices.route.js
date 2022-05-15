@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 const { createOffice, getAllOffices, deleteOffice, updateOffice } = require('../controllers/officeBranch.controller');
 const { validateFields } = require('../middlewares/validateFields');
+const { validateJWT } = require('../middlewares/jwt-validate');
 
 const router = Router();
 
@@ -11,13 +12,14 @@ router.post('/create',[
     check('email', 'it has to be a valid email').isEmail()
 ],
     validateFields,
+    validateJWT,
     createOffice);
 
 // find all offices    
-router.get('/', getAllOffices);
+router.get('/', validateJWT, getAllOffices);
 
 // delete office
-router.put('/:id/disabled', deleteOffice);
+router.put('/:id/disabled', validateJWT, deleteOffice);
 
 // update office
 router.put('/:id', [
@@ -25,6 +27,7 @@ router.put('/:id', [
     check('email', 'it has to be a valid email').isEmail()
 ],
     validateFields,
+    validateJWT,
     updateOffice);
 
 module.exports = router;

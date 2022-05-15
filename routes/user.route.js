@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { createUser, updateUser, toggleUser, findAllUsers } = require('../controllers/user.controller');
+const { validateJWT } = require('../middlewares/jwt-validate');
 const { validateFields } = require('../middlewares/validateFields');
 
 const router = Router();
@@ -13,6 +14,7 @@ router.post('/create', [
         .matches(/\d/).withMessage('must contain a number')
     ],
     validateFields,
+    validateJWT,
     createUser);
 
 // update user
@@ -24,6 +26,7 @@ router.put('/:id', [
     check('permissionLevel').not().isEmpty().withMessage('authorityes is required')        
 ],
     validateFields,
+    validateJWT,
     updateUser);
 
 // disabled user
@@ -31,9 +34,10 @@ router.put('/toggle/:id', [
     check('isActive', 'the is active boolean is required').not().isEmpty()
 ],
     validateFields,
+    validateJWT,
     toggleUser);
 
 // find all users
-router.get('/', findAllUsers);
+router.get('/', validateJWT, findAllUsers);
 
 module.exports = router;
