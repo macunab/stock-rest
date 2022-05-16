@@ -1,11 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const dbConnection = require('./db/dbConfig');
+const helmet = require('helmet');
 
 // load env variables
 require('dotenv').config();
 
 const app = express();
+app.use(helmet());
 dbConnection();
 
 // Cors
