@@ -2,7 +2,6 @@ const { response } = require('express');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const generateJWT = require('../helpers/jwt');
-const { JsonWebTokenError } = require('jsonwebtoken');
 
 // login with token generation
 const userLogin = async ( req, res = response ) => {
@@ -22,6 +21,13 @@ const userLogin = async ( req, res = response ) => {
                 msg: 'wrong email or password'
             });
         }
+        if(!dbUser.isActive) {
+            return res.status(400).json({
+                ok: false,
+                msg: 'the account is disabled'
+            });
+        }
+
         const token = await generateJWT( dbUser.id, dbUser.name, dbUser.permissionLevel );
         res.status(200).json({
             ok: true,
@@ -42,7 +48,6 @@ const userLogin = async ( req, res = response ) => {
 const renewToken = async (req, res) => {
 
     const { uid, name, permissions } = req;
-    console.log({permissions});
     const token = await generateJWT(uid, name, permissions);
     res.status(200).json({
         ok: true,

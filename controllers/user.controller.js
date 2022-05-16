@@ -30,13 +30,13 @@ const createUser = async (req, res) => {
 }
 
 // update a user
-const updateUser = (req, res) => {
+const updateUser = async (req, res) => {
     const { id } = req.params;
     const { password, name, permissionLevel } = req.body;
     try {
         const salt = bcrypt.genSaltSync();
         password = bcrypt.hashSync( password, salt );
-        User.findByIdAndUpdate(id, {name: name, password: password, permissionLevel: permissionLevel});
+        await User.findByIdAndUpdate(id, {name: name, password: password, permissionLevel: permissionLevel});
         res.status(200).json({
             ok: true,
             msg: 'successfully updated user'
@@ -51,11 +51,11 @@ const updateUser = (req, res) => {
 }
 
 // enabled/disabled user
-const toggleUser = (req, res) => {
+const toggleUser = async (req, res) => {
     const { id } = req.params;
     const { isActive } = req.body;
     try {
-        User.findByIdAndUpdate(id, {isActive: isActive});
+        await User.findByIdAndUpdate(id, {isActive});
         res.status(200).json({
             ok: true,
             msg: 'user updated isActive successfully'

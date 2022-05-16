@@ -21,11 +21,11 @@ const createProduct = async( req, res ) => {
 }
 
 // editar producto existente
-const updateProduct = ( req, res ) => {
+const updateProduct = async ( req, res ) => {
 
     const { id } = req.params;
     try {
-        Product.findByIdAndUpdate(id, req.body, (err, result) => {
+        await Product.findByIdAndUpdate(id, req.body, (err, result) => {
             if(err) {
                 console.log(err);
             } else {

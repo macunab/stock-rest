@@ -55,7 +55,6 @@ const confirmMovement = async ( req, res ) => {
     const { isConfirmed, isOut, products } = req.body;
     try{
         await changeStock(products, isOut);
-        console.log('PASO EL CHANGESTOCK');
         await Movement.findByIdAndUpdate(id, { isConfirmed: isConfirmed });
         res.status(200).json({
             ok:true,
@@ -70,7 +69,6 @@ const confirmMovement = async ( req, res ) => {
 
 }
 
-// 
 const findAllMovements = async ( req, res ) => {
 
     try {
