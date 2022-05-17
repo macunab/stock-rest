@@ -10,9 +10,7 @@ const router = Router();
 router.post('/create', [
     check('isOut', 'isOut is required').not().isEmpty(),
     check('office', 'office is required').not().isEmpty(),
-    check('user', 'user is required').not().isEmpty(),
-    check('products.*.product', 'product is required').not().isEmpty(),
-    check('products.*.quantity', 'quantity has to be a number').isNumeric()
+    check('user', 'user is required').not().isEmpty()
     ],
     validateFields,
     validateJWT,
@@ -31,13 +29,12 @@ router.put('/:id', [
     updateMovement);
 
 // find all movements
-router.get('/', findAllMovements);
+router.get('/', validateJWT, findAllMovements);
 
 // confirm movement
 router.put('/confirm/:id', [
     check('isOut', 'isOut is required').not().isEmpty(),
-    check('products.*.product', 'product is required').not().isEmpty(),
-    check('products.*.quantity', 'quantity has to be a number').isNumeric(),
+    check('products', 'product is required').not().isEmpty(),
     check('isConfirmed', 'isConfirmed is required').not().isEmpty()
 ],
     validateFields,

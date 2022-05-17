@@ -1,32 +1,33 @@
 const Product = require("../models/Product")
 
 /** type: true IN / false OUT */
-const changeStock = (products, isOut) => {
-   
-    console.log( products );
+const changeStockOffice = (products, isOut, office) => {
+
+    //console.log('ENTRO' + JSON.stringify(products));
     products.forEach(item => {
+        let stock = item.product.stockOffices.filter( stockBranch => stockBranch.office == office )[0].stock;
+        console.log(stock);
         if(!isOut) {
-            item.product.stock += item.quantity;
+            stock += item.quantity;
         } else {
-            item.product.stock -= item.quantity;
-            if(item.product.stock < 0 ){
-                item.product.stock = 0;
+            stock -= item.quantity;
+            if(stock < 0 ){
+                stock = 0;
             }
         }
-        Product.findByIdAndUpdate(item.product._id, item.product, function(err, docs) {
-            if(err){
-                console.log('ERROR' + err);
-            } else {
-                console.log('EL PRODUCTO ES' + docs);
+
+        Product.findOneAndUpdate({'_id': item.product._id, 'stockOffices.office': office}, {
+            '$set': {
+                'stockOffices.$.stock': stock 
             }
+        }, function(err, doc) {
+            if(err) { console.log(err) }
+            else { console.log( doc ) }
         });
     }); 
-}
 
-const changeStockOffice = (products, isOut) => {
-    
 }
 
 module.exports = {
-    changeStock
+    changeStockOffice
 };
