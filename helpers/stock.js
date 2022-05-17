@@ -3,10 +3,8 @@ const Product = require("../models/Product")
 /** type: true IN / false OUT */
 const changeStockOffice = (products, isOut, office) => {
 
-    //console.log('ENTRO' + JSON.stringify(products));
     products.forEach(item => {
         let stock = item.product.stockOffices.filter( stockBranch => stockBranch.office == office )[0].stock;
-        console.log(stock);
         if(!isOut) {
             stock += item.quantity;
         } else {
@@ -15,7 +13,6 @@ const changeStockOffice = (products, isOut, office) => {
                 stock = 0;
             }
         }
-
         Product.findOneAndUpdate({'_id': item.product._id, 'stockOffices.office': office}, {
             '$set': {
                 'stockOffices.$.stock': stock 
@@ -28,6 +25,20 @@ const changeStockOffice = (products, isOut, office) => {
 
 }
 
+// load products when creating a new officeBranch
+const loadProductsNewOffice = (office) => {
+
+    Product.updateMany({}, {
+        '$push': {
+            'stockOffices': { office, stock: 0 }
+        }
+    }, function(err, doc) {
+        if(err) { console.log(err) }
+        else { console.log(doc) }
+    });
+}
+
 module.exports = {
-    changeStockOffice
+    changeStockOffice,
+    loadProductsNewOffice
 };
