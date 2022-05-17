@@ -3,8 +3,14 @@ const Movement = require("../models/Movement");
 
 /** create movement */
 const createMovement = async ( req, res ) => {
+    const {office, products, isOut, isConfirmed } = req.body;
     try {
         const dbMovement = new Movement(req.body);
+
+        // true when create movement of only one product and optional in other cases
+        if(isConfirmed){
+            await changeStock.changeStockOffice(products, isOut, office);
+        }
         await dbMovement.save();
         res.status(200).json({
             ok: true,
