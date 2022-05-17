@@ -23,4 +23,10 @@ const changeStock = (products, isOut) => {
     }); 
 }
 
-module.exports = changeStock;
+const changeStockOffice = (products, isOut) => {
+    
+}
+
+module.exports = {
+    changeStock
+};
