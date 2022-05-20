@@ -3,8 +3,14 @@ const Movement = require("../models/Movement");
 
 /** create movement */
 const createMovement = async ( req, res ) => {
+    const {office, products, isOut, isConfirmed } = req.body;
     try {
         const dbMovement = new Movement(req.body);
+
+        // true when create movement of only one product and optional in other cases
+        if(isConfirmed){
+            await changeStock.changeStockOffice(products, isOut, office);
+        }
         await dbMovement.save();
         res.status(200).json({
             ok: true,
@@ -44,17 +50,17 @@ const updateMovement = async ( req, res ) => {
     }
 }
 
-/** Una vez confirmado un movimiento se cargan todos las modificaciones de stock en 
- *  los productos seleccionados.
- * Me tope con un bug al usar un callback en findByIdAndUpdate, en ese caso es necesario 
- * utilizar .then() para visualizar la data.
+/** 
+ * Confirmar el movimiento y realizar el cambio sobre el stock en base a la sucursal 
+ * a la que pertenece el movimiento.
  */
 const confirmMovement = async ( req, res ) => {
 
     const { id } = req.params;
-    const { isConfirmed, isOut, products } = req.body;
+    const { isConfirmed, isOut, products, office } = req.body;
     try{
-        await changeStock(products, isOut);
+
+        await changeStock.changeStockOffice(products, isOut, office);
         await Movement.findByIdAndUpdate(id, { isConfirmed: isConfirmed });
         res.status(200).json({
             ok:true,
@@ -72,7 +78,7 @@ const confirmMovement = async ( req, res ) => {
 const findAllMovements = async ( req, res ) => {
 
     try {
-        const values = await Movement.find();
+        const values = await Movement.find().populate('products.product');
         res.status(200).json({
             values
         });

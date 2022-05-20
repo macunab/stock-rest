@@ -22,6 +22,10 @@ const UserSchema = Schema({
         type: ['ADMIN', 'EMPLOYEE'],
         required: true,
         default: 'EMPLOYEE'
+    },
+    office: {
+        type: Schema.Types.ObjectId,
+        ref: 'OfficeBranch'
     }
 },
     { versionKey: false });

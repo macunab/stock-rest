@@ -1,3 +1,4 @@
+const { loadProductsNewOffice } = require("../helpers/stock");
 const OfficeBranch = require("../models/OfficeBranch");
 
 
@@ -7,6 +8,7 @@ const createOffice = async ( req, res ) => {
     try {
         const dbOffice = new OfficeBranch( req.body );
         await dbOffice.save();
+        await loadProductsNewOffice(dbOffice);
         res.status(200).json({
             ok: true,
             msg: 'office created successfully'

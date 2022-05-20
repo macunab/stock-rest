@@ -5,24 +5,28 @@ const ProductSchema = Schema({
         type: String,
         required: true
     },
-    office: {
-        type: Schema.Types.ObjectId,
-        ref: 'OfficeBranch',
-        require: true
-    },
     description: {
         type: String,
         required: false
     },
     price: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
-    stock: {
-        type: Number,
-        required: true
-    }
+    stockOffices: [
+        {
+            office: {
+                type: Schema.Types.ObjectId,
+                ref: 'OfficeBranch'
+            },
+            stock: {
+                type: Number,
+                default: 0,
+            }
+        }
+    ]
 },
 { timestamps: true, versionKey: false });
 
-module.exports = model('Product', ProductSchema);
+module.exports = model('Product', ProductSchema)

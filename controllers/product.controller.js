@@ -1,11 +1,24 @@
 const Product = require("../models/Product")
 const { request } = require('express');
+const OfficeBranch = require("../models/OfficeBranch");
 
 // crear producto nuevo
 const createProduct = async( req, res ) => {
 
+    const { office, stock, name, price, description } = req.body;
+    const so = [];
     try {
-        const dbProduct = new Product( req.body );
+        const dbProduct = new Product( {name, price, description} );
+        const offices = await OfficeBranch.find({});
+        offices.forEach(item =>{
+            const id = item._id;
+            if(id == office) {
+                so.push({office, stock});
+            } else {
+                so.push({ office: id, stock: 0 });
+            }
+        });
+        dbProduct.stockOffices = so;
         await dbProduct.save();
         res.status(200).json({
             ok: true,
@@ -64,9 +77,10 @@ const deleteProduct = async ( req = request, res ) => {
 }
 
 // consultar todos los productos
-const getAllProducts = async ( req = request, res ) => {
+const findAllProducts = async ( req = request, res ) => {
+
     try {
-        const values = await Product.find({});
+        const values = Product.find({});
         res.status(200).json({
             values
         });
@@ -78,9 +92,27 @@ const getAllProducts = async ( req = request, res ) => {
     }
 }
 
+const findByOffice = async (req, res) => {
+
+    const { office } = req.body;
+    try {
+        const products = await Product.find({ 'stockOffices.office': office });
+        // const products = await Product.find({ 'stockOffices.office': office }, "stockOffices.$"); // projection in mongoose
+        res.status(200).json({
+            products
+        });
+    } catch(err) {
+        res.status(401).json({
+            ok: false,
+            msg: 'Error trying to get products by office'
+        });
+    }
+}
+
 module.exports = {
     createProduct,
     updateProduct,
     deleteProduct,
-    getAllProducts
+    findAllProducts,
+    findByOffice
 }
