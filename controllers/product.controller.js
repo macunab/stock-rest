@@ -66,9 +66,9 @@ const deleteProduct = async ( req = request, res ) => {
 // consultar todos los productos
 const getAllProducts = async ( req = request, res ) => {
     try {
-        const products = await Product.find({});
+        const values = await Product.find({});
         res.status(200).json({
-            products
+            values
         });
     } catch( err ) {
         res.status(401).json({

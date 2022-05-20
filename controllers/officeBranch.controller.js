@@ -60,9 +60,9 @@ const deleteOffice = async ( req, res ) => {
 const getAllOffices = async ( req, res ) => {
 
     try {
-        const offices = await OfficeBranch.find({});
+        const values = await OfficeBranch.find({});
         res.status(200).json({
-            offices
+            values
         });
     } catch( err ) {
         res.status(400).json({

@@ -72,9 +72,9 @@ const confirmMovement = async ( req, res ) => {
 const findAllMovements = async ( req, res ) => {
 
     try {
-        const movements = await Movement.find();
+        const values = await Movement.find();
         res.status(200).json({
-            movements
+            values
         });
     } catch(err) {
         res.status(400).json({

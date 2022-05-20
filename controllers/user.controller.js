@@ -72,9 +72,9 @@ const toggleUser = async (req, res) => {
 // find users
 const findAllUsers = async (req, res) => {
     try {
-        const users = await User.find({});
+        const values = await User.find({});
         res.status(200).json({
-            users
+            values
         });
     } catch (err) {
         res.status(200).json({
