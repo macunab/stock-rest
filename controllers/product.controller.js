@@ -96,10 +96,10 @@ const findByOffice = async (req, res) => {
 
     const { office } = req.body;
     try {
-        const products = await Product.find({ 'stockOffices.office': office });
+        const values = await Product.find({ 'stockOffices.office': office });
         // const products = await Product.find({ 'stockOffices.office': office }, "stockOffices.$"); // projection in mongoose
         res.status(200).json({
-            products
+            values
         });
     } catch(err) {
         res.status(401).json({
