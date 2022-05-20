@@ -80,7 +80,7 @@ const deleteProduct = async ( req = request, res ) => {
 const findAllProducts = async ( req = request, res ) => {
 
     try {
-        const values = Product.find({});
+        const producst = Product.find({});
         res.status(200).json({
             values
         });
