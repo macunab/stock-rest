@@ -19,6 +19,7 @@ const createUser = async (req, res) => {
         dbUser.save();
         res.status(200).json({
             ok: true,
+            uid: dbUser._id,
             msg: 'user has been created successfully'
         });
     } catch( err ) {

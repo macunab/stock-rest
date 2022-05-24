@@ -11,6 +11,7 @@ const createOffice = async ( req, res ) => {
         await loadProductsNewOffice(dbOffice);
         res.status(200).json({
             ok: true,
+            uid: dbOffice._id,
             msg: 'office created successfully'
         });
     } catch( err ) {

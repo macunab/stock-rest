@@ -16,7 +16,7 @@ router.post('/create',[
     createOffice);
 
 // find all offices    
-router.get('/', validateJWT, getAllOffices);
+router.get('/',validateJWT, getAllOffices);
 
 // delete office
 router.put('/:id/disabled', validateJWT, deleteOffice);

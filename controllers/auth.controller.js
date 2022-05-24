@@ -28,12 +28,13 @@ const userLogin = async ( req, res = response ) => {
             });
         }
 
-        const token = await generateJWT( dbUser.id, dbUser.name, dbUser.permissionLevel );
+        const token = await generateJWT( dbUser.id, dbUser.name, dbUser.permissionLevel, dbUser.office );
         res.status(200).json({
             ok: true,
             uid: dbUser.id,
             name: dbUser.name,
             permissions: dbUser.permissionLevel,
+            office: dbUser.office,
             token
         });
 
@@ -47,13 +48,14 @@ const userLogin = async ( req, res = response ) => {
 
 const renewToken = async (req, res) => {
 
-    const { uid, name, permissions } = req;
-    const token = await generateJWT(uid, name, permissions);
+    const { uid, name, permissions, office } = req;
+    const token = await generateJWT(uid, name, permissions, office);
     res.status(200).json({
         ok: true,
         uid: uid,
         name: name,
         permissions: permissions,
+        office: office,
         token
     });
 }

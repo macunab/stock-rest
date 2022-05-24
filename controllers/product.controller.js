@@ -22,6 +22,7 @@ const createProduct = async( req, res ) => {
         await dbProduct.save();
         res.status(200).json({
             ok: true,
+            uid: dbProduct._id,
             msg: 'product created successfully'
         });
     } catch( err ) {
@@ -80,7 +81,7 @@ const deleteProduct = async ( req = request, res ) => {
 const findAllProducts = async ( req = request, res ) => {
 
     try {
-        const producst = Product.find({});
+        const values = await Product.find({});
         res.status(200).json({
             values
         });

@@ -14,6 +14,7 @@ const createMovement = async ( req, res ) => {
         await dbMovement.save();
         res.status(200).json({
             ok: true,
+            uid: dbMovement._id,
             msg: 'movement successfully created'
         });
     } catch(err) {

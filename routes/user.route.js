@@ -11,7 +11,8 @@ router.post('/create', [
     check('name', 'the name is required').not().isEmpty(),
     check('email').isEmail().withMessage('it has to be a valid email'),
     check('password').isLength({ min: 5 }).withMessage('must be at least 5 chars long')
-        .matches(/\d/).withMessage('must contain a number')
+        .matches(/\d/).withMessage('must contain a number'),
+    check('office', 'the office is required').not().isEmpty()        
     ],
     validateFields,
     validateJWT,
