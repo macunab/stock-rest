@@ -12,7 +12,7 @@ const createProduct = async( req, res ) => {
         const offices = await OfficeBranch.find({});
         offices.forEach(item =>{
             const id = item._id;
-            if(id == office) {
+            if(id == office._id) {
                 so.push({office, stock});
             } else {
                 so.push({ office: id, stock: 0 });
@@ -39,21 +39,15 @@ const updateProduct = async ( req, res ) => {
 
     const { id } = req.params;
     try {
-        await Product.findByIdAndUpdate(id, req.body, (err, result) => {
-            if(err) {
-                console.log(err);
-            } else {
-                console.log(result);
-            }
-        });
+        await Product.findByIdAndUpdate(id, req.body);
         res.status(200).json({
             ok: true,
             msg: 'successfully updated product'
         });
     } catch( err ) {
         res.status(401).json({
-            ok: true,
-            msg: 'An error ocurred during product updated'
+            ok: false,
+            msg: 'ERROR: ' + err
         });
     }
 }

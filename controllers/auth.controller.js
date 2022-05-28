@@ -7,7 +7,7 @@ const generateJWT = require('../helpers/jwt');
 const userLogin = async ( req, res = response ) => {
     const { email, password } = req.body;
     try {
-        const dbUser = await User.findOne({ email });
+        const dbUser = await User.findOne({ email }).populate('office');
         if(!dbUser) {
             return res.status(400).json({
                 ok: false,
