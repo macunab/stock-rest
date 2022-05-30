@@ -4,7 +4,7 @@ const Product = require("../models/Product")
 const changeStockOffice = (products, isOut, office) => {
 
     products.forEach(item => {
-        let stock = item.product.stockOffices.filter( stockBranch => stockBranch.office == office )[0].stock;
+        let stock = item.product.stockOffices.filter( stockBranch => stockBranch.office == office._id )[0].stock;
         if(!isOut) {
             stock += item.quantity;
         } else {

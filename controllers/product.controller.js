@@ -104,10 +104,26 @@ const findByOffice = async (req, res) => {
     }
 }
 
+const findOneProduct = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const val = await Product.findById(id);
+        res.status(200).json({
+            val
+        });
+    }catch(err) {
+        res.status(401).json({
+            ok: false,
+            msg: 'Ha ocurrido un error'
+        });
+    }
+}
+
 module.exports = {
     createProduct,
     updateProduct,
     deleteProduct,
     findAllProducts,
-    findByOffice
+    findByOffice,
+    findOneProduct
 }

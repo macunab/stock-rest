@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { createProduct, findAllProducts, deleteProduct, updateProduct, findByOffice } = require('../controllers/product.controller');
+const { createProduct, findAllProducts, deleteProduct, updateProduct, findByOffice, findOneProduct } = require('../controllers/product.controller');
 const { validateFields } = require('../middlewares/validateFields');
 const { validateJWT } = require('../middlewares/jwt-validate');
 
@@ -35,5 +35,7 @@ router.put('/:id', [
     validateFields,
     validateJWT,
     updateProduct)
+
+router.get('/:id', findOneProduct);    
 
 module.exports = router;

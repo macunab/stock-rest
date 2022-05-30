@@ -1,12 +1,16 @@
 const changeStock = require("../helpers/stock");
 const Movement = require("../models/Movement");
+const Product = require("../models/Product");
 
 /** create movement */
 const createMovement = async ( req, res ) => {
     const {office, products, isOut, isConfirmed } = req.body;
     try {
         const dbMovement = new Movement(req.body);
-
+        if( products[0].product.stockOffices === undefined ){
+            const product = await Product.findById(products[0].product)
+            products[0].product = product;
+        }
         // true when create movement of only one product and optional in other cases
         if(isConfirmed){
             await changeStock.changeStockOffice(products, isOut, office);
@@ -18,9 +22,10 @@ const createMovement = async ( req, res ) => {
             msg: 'movement successfully created'
         });
     } catch(err) {
+        console.log(err);
         res.status(400).json({
             ok: false,
-            msg: 'an error ocurred while trying create a movement'
+            msg: 'an error ocurred while trying create a movement' + err
         });
     }
     
