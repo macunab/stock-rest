@@ -84,7 +84,7 @@ const confirmMovement = async ( req, res ) => {
 const findAllMovements = async ( req, res ) => {
 
     try {
-        const values = await Movement.find().populate('products.product');
+        const values = await Movement.find().populate('products.product office user');
         res.status(200).json({
             values
         });
