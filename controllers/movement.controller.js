@@ -100,8 +100,21 @@ const findAllMovements = async ( req, res ) => {
  * la segunda opcion implicaria hacer un controller en el que le pase un parametro
  * para identificar si quiero un tipo de movimiento habilitado o no.
  */
-const deleteMovement = ( req, res ) => {
+const deleteMovement = async ( req, res ) => {
+    const { id } = req.params;
+    try {
+        await Movement.deleteOne({ _id: id });
+        res.status(200).json({
+            ok: true,
+            msg: 'Movement removed successfully'
+        });
 
+    } catch(err) {
+        res.status(400).json({
+            ok: false,
+            msg: 'An error ocurred while trying delete a movement'
+        });
+    }
 }
 
 module.exports = {
