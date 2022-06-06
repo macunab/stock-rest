@@ -30,11 +30,7 @@ router.put('/:id', [
 router.get('/', validateJWT, findAllMovements);
 
 // confirm movement
-router.put('/confirm/:id', [
-    check('isOut', 'isOut is required').not().isEmpty(),
-    check('products', 'product is required').not().isEmpty(),
-    check('isConfirmed', 'isConfirmed is required').not().isEmpty()
-],
+router.put('/confirm/:id',
     validateFields,
     validateJWT,
     confirmMovement);

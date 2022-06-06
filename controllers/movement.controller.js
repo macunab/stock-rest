@@ -63,10 +63,12 @@ const updateMovement = async ( req, res ) => {
 const confirmMovement = async ( req, res ) => {
 
     const { id } = req.params;
-    const { isConfirmed, isOut, products, office } = req.body;
+    
     try{
-
-        await changeStock.changeStockOffice(products, isOut, office);
+        const value = await Movement.findOne({ _id: id }).populate('products.product office');
+        const { isConfirmed, isOut, products, office } = value;
+        console.log(office)
+        await changeStock.confirmStock(value.products, isOut, office);
         await Movement.findByIdAndUpdate(id, { isConfirmed: isConfirmed });
         res.status(200).json({
             ok:true,
@@ -75,7 +77,7 @@ const confirmMovement = async ( req, res ) => {
     } catch(err) {
         res.status(400).json({
             ok: false,
-            msg: err
+            msg: 'ERROR' + err
         });
     }
 
