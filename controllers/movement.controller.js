@@ -66,10 +66,10 @@ const confirmMovement = async ( req, res ) => {
     
     try{
         const value = await Movement.findOne({ _id: id }).populate('products.product office');
-        const { isConfirmed, isOut, products, office } = value;
+        const { isOut, office } = value;
         console.log(office)
         await changeStock.confirmStock(value.products, isOut, office);
-        await Movement.findByIdAndUpdate(id, { isConfirmed: isConfirmed });
+        await Movement.findByIdAndUpdate(id, { isConfirmed: true });
         res.status(200).json({
             ok:true,
             msg: 'movement confirmed successfully'
