@@ -119,10 +119,27 @@ const deleteMovement = async ( req, res ) => {
     }
 }
 
+const findOneMovement = async ( req, res ) => {
+    const { id } = req.params;
+    try {
+        const movement = await Movement.findById({_id: id}).populate('products.product office user', 'name email');
+        res.status(200).json({
+            ok: true,
+            value: movement
+        })
+    } catch(err) {
+        res.status(400).json({
+            ok: false,
+            msg: 'An error ocurred while trying find a movement'
+        });
+    }
+}
+
 module.exports = {
     createMovement,
     updateMovement,
     deleteMovement,
     confirmMovement,
-    findAllMovements
+    findAllMovements,
+    findOneMovement
 }

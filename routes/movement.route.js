@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
-const { createMovement, updateMovement, findAllMovements, confirmMovement } = require('../controllers/movement.controller');
+const { createMovement, updateMovement, findAllMovements, confirmMovement, findOneMovement } = require('../controllers/movement.controller');
 const { validateFields } = require('../middlewares/validateFields');
 const { validateJWT } = require('../middlewares/jwt-validate');
 
@@ -36,5 +36,8 @@ router.put('/confirm/:id',
     confirmMovement);
 
 // delete movement (put or delete?)
+
+// find one movement
+router.get('/:id', validateJWT, findOneMovement);
 
 module.exports = router;
