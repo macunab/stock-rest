@@ -125,7 +125,7 @@ const findOneMovement = async ( req, res ) => {
         const movement = await Movement.findById({_id: id}).populate('products.product office user', 'name email');
         res.status(200).json({
             ok: true,
-            value: movement
+            data: movement
         })
     } catch(err) {
         res.status(400).json({
